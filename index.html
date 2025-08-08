@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto: La Flor que Salva Vidas</title>
+    
+    <!-- Fuentes de Alto Impacto de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- ESTILOS CSS: LA VERSIÓN DEFINITIVA, HECHA BIEN. --- */
+
+        :root {
+            /* LA PALETA DE COLORES QUE PEDISTE, COMO PROTAGONISTA */
+            --celeste: #3498DB;
+            --amarillo: #F1C40F;
+            --rosado: #E91E63;
+            
+            --texto-oscuro: #2C3E50;
+            --fondo: #F4F9FF;
+            --blanco: #FFFFFF;
+            --verde: #27AE60;
+            --naranja: #E67E22;
+            
+            --fuente-titulos: 'Bangers', cursive;
+            --fuente-cuerpo: 'Nunito', sans-serif;
+        }
+
+        /* --- CONFIGURACIÓN BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--fuente-cuerpo); background-color: var(--fondo); line-height: 1.7; }
+        .container { width: 90%; max-width: 1100px; margin: 0 auto; }
+
+        /* --- HEADER Y NAVEGACIÓN --- */
+        header {
+            background: var(--blanco);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+            padding: 0.8rem 0;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        
+        /* === AJUSTE DE PRECISIÓN === */
+        .navbar { 
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Distribuye el logo a la izquierda y los links a la derecha */
+        }
+        
+        .logo {
+            font-family: var(--fuente-titulos); color: var(--rosado);
+            font-size: 2.2rem; letter-spacing: 2px;
+            text-decoration: none; transition: transform 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .logo:hover { transform: scale(1.05); }
+
+        .nav-links { 
+            list-style: none; 
+            display: flex; 
+            gap: 0.3rem; 
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .nav-links a {
+            text-decoration: none; color: var(--texto-oscuro);
+            font-family: var(--fuente-titulos); font-size: 0.9rem; letter-spacing: 0.5px;
+            padding: 4px 8px; border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            white-space: nowrap;
+        }
+        .nav-links a.active {
+            background: var(--rosado); color: var(--blanco);
+            transform: scale(1.1); box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+        }
+        .nav-links a:not(.active):hover { color: var(--rosado); transform: translateY(-3px); }
+        .menu-toggle { display: none; font-size: 2.5rem; cursor: pointer; color: var(--texto-oscuro); background: none; border: none; }
+
+        /* --- ESTRUCTURA DE SECCIONES --- */
+        .content-section {
+            padding: 6rem 0;
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .content-section.active { display: block; animation: fadeIn 0.8s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .content-section::before {
+            content: ''; position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+        
+        /* Fondos alternados para las secciones */
+        #inicio::before { background-color: var(--verde); clip-path: polygon(0 0, 100% 6%, 100% 100%, 0 94%); }
+        #titulo::before { background-color: var(--rosado); clip-path: polygon(0 6%, 100% 0, 100% 94%, 0 100%); }
+        #problema::before { background-color: var(--celeste); clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%); }
+        #pregunta::before { background-color: var(--amarillo); clip-path: polygon(0 0, 100% 8%, 100% 100%, 0 92%); }
+        #hipotesis::before { background-color: var(--verde); clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%); }
+        #plan::before { background-color: var(--naranja); clip-path: polygon(0 0, 100% 6%, 100% 100%, 0 94%); }
+        #datos::before { background-color: var(--celeste); clip-path: polygon(0 6%, 100% 0, 100% 94%, 0 100%); }
+        #ingredientes::before { background-color: var(--amarillo); clip-path: polygon(0 0, 100% 7%, 100% 100%, 0 93%); }
+        #pasos::before { background-color: var(--rosado); clip-path: polygon(0 7%, 100% 0, 100% 93%, 0 100%); }
+        #respuesta::before { background-color: var(--verde); clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 95%); }
+        #conclusion::before { background-color: var(--naranja); clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%); }
+        #referencias::before { background-color: var(--celeste); clip-path: polygon(0 0, 100% 8%, 100% 100%, 0 92%); }
+        
+        .section-title {
+            font-family: var(--fuente-titulos); font-size: 4.5rem;
+            text-align: center; margin-bottom: 3rem;
+            letter-spacing: 3px; color: var(--blanco);
+            text-shadow: 4px 4px 0px var(--texto-oscuro);
+        }
+        
+        /* --- TARJETAS DE CONTENIDO (CARDS) --- */
+        .card {
+            background: var(--blanco); border-radius: 30px;
+            padding: 2.5rem; text-align: center;
+            border: 5px solid var(--texto-oscuro);
+            transform: rotate(-1deg);
+            transition: all 0.4s ease;
+            opacity: 0; transform: translateY(50px) rotate(-1deg); animation-fill-mode: forwards;
+            margin-bottom: 2rem;
+        }
+        .card.visible { opacity: 1; transform: translateY(0) rotate(-1deg); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .card:hover { transform: scale(1.05) rotate(0deg); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); }
+        .card h2 {
+            font-family: var(--fuente-titulos); font-size: 3rem;
+            letter-spacing: 2px; color: var(--rosado);
+            margin-bottom: 1rem;
+        }
+        .card p { font-size: 1.2rem; font-weight: 700; color: var(--texto-oscuro); }
+        .card-image {
+            width: 100%; max-width: 350px; height: auto;
+            border-radius: 20px; margin-top: 1.5rem;
+            border: 5px solid var(--texto-oscuro);
+        }
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .grid-image { width: 100%; border-radius: 25px; border: 5px solid var(--texto-oscuro); transform: rotate(2deg); transition: transform 0.4s ease; }
+        .grid-image:hover { transform: scale(1.05) rotate(0deg); }
+
+        /* --- TÍTULO PRINCIPAL --- */
+        .main-title {
+            font-family: var(--fuente-titulos);
+            font-size: 6rem;
+            color: var(--blanco);
+            text-shadow: 5px 5px 0px var(--texto-oscuro);
+            text-align: center;
+            letter-spacing: 4px;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        /* --- LISTA DE PUNTOS --- */
+        .bullet-list {
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .bullet-list li {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--texto-oscuro);
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+        .bullet-list li::before {
+            content: "🌺";
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+        }
+
+        /* --- CUADRO ESPECIAL PARA FORMAS DE CONSUMO --- */
+        .consumption-box {
+            background: linear-gradient(45deg, var(--amarillo), var(--celeste));
+            border: 6px solid var(--texto-oscuro);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            transform: rotate(1deg);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        .consumption-box h3 {
+            font-family: var(--fuente-titulos);
+            font-size: 2.5rem;
+            color: var(--texto-oscuro);
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 0px var(--blanco);
+        }
+        .consumption-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .consumption-item {
+            background: var(--blanco);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 3px solid var(--texto-oscuro);
+            font-weight: 700;
+            color: var(--texto-oscuro);
+            text-align: center;
+            transform: rotate(-1deg);
+            transition: transform 0.3s ease;
+        }
+        .consumption-item:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        /* --- ESTILOS ESPECÍFICOS --- */
+        #ingredientes .ingredientes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+        #ingredientes .ingrediente-item { text-align: center; }
+        #ingredientes .ingrediente-item img {
+            width: 150px; height: 150px; object-fit: cover;
+            border-radius: 50%; border: 8px solid var(--blanco);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); margin-bottom: 1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #ingredientes .ingrediente-item:hover img { transform: scale(1.2) rotate(-15deg); }
+        #ingredientes .ingrediente-item p { font-family: var(--fuente-titulos); font-size: 1.8rem; color: var(--texto-oscuro); letter-spacing: 1px; }
+        
+        /* === TIMELINE PARA PASO A PASO === */
+        #pasos .timeline {
+            position: relative;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        #pasos .timeline::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            background-color: var(--amarillo);
+            border: 2px solid var(--texto-oscuro);
+            top: 0; bottom: 0;
+            left: 50%;
+            margin-left: -4px;
+        }
+        #pasos .paso-container {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            opacity: 0; transform: translateY(50px); animation-fill-mode: forwards;
+        }
+        #pasos .paso-container.visible { opacity: 1; transform: translateY(0); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        #pasos .paso-container.left { left: 0; }
+        #pasos .paso-container.right { left: 50%; }
+        
+        #pasos .paso-container::after {
+            content: '';
+            position: absolute;
+            width: 30px; height: 30px;
+            background: var(--rosado);
+            border: 5px solid var(--blanco);
+            box-shadow: 0 0 0 4px var(--texto-oscuro);
+            top: 30px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        #pasos .paso-container.left::after { right: -19px; }
+        #pasos .paso-container.right::after { left: -19px; }
+        
+        #pasos .paso-content {
+            padding: 2rem;
+            background: var(--blanco);
+            position: relative;
+            border-radius: 20px;
+            border: 5px solid var(--texto-oscuro);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        #pasos .paso-content h3 {
+            font-family: var(--fuente-titulos);
+            font-size: 2.5rem;
+            color: var(--rosado);
+            margin-bottom: 1rem;
+        }
+        #pasos .paso-content p { font-weight: 700; font-size: 1.2rem; }
+        #pasos .paso-content img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            border: 4px solid var(--texto-oscuro);
+        }
+
+        /* --- FOOTER Y RESPONSIVIDAD --- */
+        footer {
+            background: linear-gradient(90deg, var(--rosado), var(--celeste), var(--amarillo), var(--rosado));
+            background-size: 200% 200%; color: var(--blanco);
+            font-family: var(--fuente-titulos); font-size: 1.2rem;
+            letter-spacing: 2px; padding: 2.5rem 0; text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: footerGradient 10s ease infinite;
+        }
+        @keyframes footerGradient {
+            0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links a { font-size: 0.8rem; padding: 3px 6px; }
+            .content-grid { grid-template-columns: 1fr; }
+            .grid-image { order: -1; margin-bottom: 2rem; }
+            .consumption-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { 
+                display: none; 
+                flex-direction: column; 
+                width: 100%; 
+                background: var(--blanco); 
+                position: absolute; 
+                top: 100%; 
+                left: 0; 
+                padding: 1rem 0; 
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                gap: 0;
+            }
+            .nav-links.active { display: flex; }
+            .nav-links li { text-align: center; margin: 0.5rem 0; }
+            .nav-links a { font-size: 1rem; padding: 8px 16px; }
+            .menu-toggle { display: block; position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); }
+            .navbar { position: relative; }
+            .section-title { font-size: 3rem; }
+            .main-title { font-size: 4rem; }
+            #ingredientes .ingredientes-grid { grid-template-columns: 1fr 1fr; }
+
+            /* Adaptación de la timeline para móviles */
+            #pasos .timeline::after { left: 30px; margin-left: 0; }
+            #pasos .paso-container { width: 100%; padding-left: 70px; padding-right: 15px; }
+            #pasos .paso-container.left, #pasos .paso-container.right { left: 0; }
+            #pasos .paso-container.left::after, #pasos .paso-container.right::after { left: 11px; }
+        }
+        
+        @media (max-width: 480px) {
+            .logo { font-size: 2rem; }
+            .section-title { font-size: 2.5rem; }
+            .main-title { font-size: 3rem; }
+            .nav-links a { font-size: 0.8rem; padding: 3px 6px; }
+            #ingredientes .ingredientes-grid { grid-template-columns: 1fr; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="container navbar">
+            <a href="#inicio" class="logo"><img src="img/1215_MAYKOL_IA.png" alt="Logo" style="height: 48px; vertical-align: middle;"></a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#titulo">Título</a></li>
+                <li><a href="#problema">Problema</a></li>
+                <li><a href="#pregunta">Pregunta</a></li>
+                <li><a href="#hipotesis">Hipótesis</a></li>
+                <li><a href="#plan">Plan</a></li>
+                <li><a href="#datos">Datos</a></li>
+                <li><a href="#ingredientes">Ingredientes</a></li>
+                <li><a href="#pasos">Pasos</a></li>
+                <li><a href="#respuesta">Respuesta</a></li>
+                <li><a href="#conclusion">Conclusión</a></li>
+                <li><a href="#referencias">Referencias</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Abrir menú">&#9776;</button>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="inicio" class="content-section vibrant-section">
+            <div class="container">
+                <h2 class="section-title">Inicio</h2>
+                <div class="card">
+                    <h2>Presentado por</h2>
+                    <p style="font-size: 1.5rem; font-weight: 900;">Kahory Saavedra Ambrosio<br>Dylan Smith Gamonal Torres</p>
+                    <h2 style="margin-top:2rem;">Colegio</h2>
+                    <p style="font-size: 1.5rem; font-weight: 900;">I.E. 1215 San Juan de Pariachi - 3ro "A"</p>
+                    <h2 style="margin-top:2rem;">Proyecto</h2>
+                    <p style="font-size: 1.3rem; font-weight: 900; color: var(--rosado);">LA FLOR QUE SALVA VIDAS</p>
+                    <p style="font-size: 1.1rem; margin-top: 1rem;">Investigación sobre los beneficios naturales de la Flor de Jamaica para la salud y nutrición de nuestra comunidad.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="titulo" class="content-section vibrant-section">
+            <div class="container">
+                <h1 class="main-title">LA FLOR QUE SALVA VIDAS</h1>
+                <div class="card">
+                    <h2>Proyecto de Investigación</h2>
+                    <p>Un estudio sobre los beneficios naturales de la Flor de Jamaica para la salud y nutrición de nuestra comunidad.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="problema" class="content-section vibrant-section">
+            <div class="container">
+                <h2 class="section-title">Situación Problemática</h2>
+                <div class="card">
+                    <h2>El Problema Actual</h2>
+                    <p>EN LA ACTUALIDAD LAS ENFERMEDADES SON COMUNES POR EL MAL CLIMA, POR EL CONSUMO DE LAS COMIDAS CHATARRAS; HAY COMPUESTOS QUÍMICOS QUE TE CURAN PERO TE ENFERMAN EL HÍGADO, EL ESTÓMAGO, ADEMÁS SON DOLOROSOS POR LAS AMPOLLAS.</p>
+                    <img src="img/situacion.png" alt="Niño enfermo" class="card-image">
+                </div>
+            </div>
+        </section>
+
+        <section id="pregunta" class="content-section vibrant-section">
+            <div class="container">
+                <h2 class="section-title">Pregunta de Investigación</h2>
+                <div class="content-grid">
+                    <div class="card">
+                        <h2>Pregunta Clave</h2>
+                        <p>¿DE QUÉ MANERA INFLUYE LA FLOR DE JAMAICA PARA LA SALUD Y NUTRICIÓN DE LOS POBLADORES DE SAN JUAN DE PARIACHI?</p>
+                    </div>
+                    <img src="img/pregunta.avif" alt="Signo de interrogación" class="grid-image">
+                </div>
+            </div>
+        </section>
+
+        <section id="hipotesis" class="content-section vibrant-section">
+            <div class="container">
+                <h2 class="section-title">Hipótesis</h2>
+                <div class="card">
+                    <h2>Nuestras Suposiciones</h2>
+                    <ul class="bullet-list">
+                        <li>LA FLOR DE JAMAICA ES RICA EN VITAMINA A, VITAMINA C, VITAMINA E, VITAMINA B, ADEMÁS ES UNA FUENTE DE MINERALES COMO EL HIERRO, FÓSFORO Y CALCIO.</li>
+                        <li>MEDIANTE EL CONSUMO DE LA FLOR DE JAMAICA SE PREVIENEN Y CURAN LAS DISTINTAS ENFERMEDADES COMUNES DE LAS PERSONAS, PORQUE SI NO SE PREVIENEN, SE VUELVEN CRÓNICAS.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="plan" class="content-section vibrant-section">
+            <div class="container">
+                <h2 class="section-title">Plan de Acción</h2>
+                <div class="card">
+                    <h2>Metodología</h2>
+                    <ul class="bullet-list">
+                        <li>VER VIDEOS DE CHARLAS QUE DAN EN EL HOSPITAL.</li>
+                        <li>BUSCAR INFORMACIÓN EN INTERNET.</li>
+                        <li>INVESTIGAR LA COMPOSICIÓN NUTRICIONAL DE LA FLOR DE JAMAICA Y LOS BENEFICIOS QUE APORTAN PARA MEJORAR NUESTRA SALUD.</li>
+                        <li>DISEÑAR UN ESTUDIO DE INVESTIGACIÓN PARA EVALUAR LOS EFECTOS DE LA FLOR DE JAMAICA EN LAS PERSONAS QUE LA CONSUMEN.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="datos" class="content-section vibrant-section">
+            <div class="container">
+                <h2 class="section-title">Recojo de Datos</h2>
+                <div class="card">
+                    <h2>Registro de Datos</h2>
+                    <p>REGISTRAR LOS DATOS DE LOS ANÁLISIS DEL CONSUMO DE LA FLOR DE JAMAICA.</p>
+                </div>
+                
+                <div class="consumption-box">
+                    <h3>FORMAS DE CONSUMIR LA BEBIDA DE LA FLOR DE JAMAICA</h3>
+                    <div class="consumption-grid">
+                        <div class="consumption-item">TOMAR FRÍA EN AYUNAS</div>
+                        <div class="consumption-item">TOMAR CALIENTE CON LIMÓN Y MIEL</div>
+                        <div class="consumption-item">TOMAR CALIENTE MEDIA HORA ANTES DE LOS ALIMENTOS (D.A.C)</div>
+                        <div class="consumption-item">TOMAR COMO AGUA DE TIEMPO</div>
+                        <div class="consumption-item">DESINFLAMA LOS RIÑONES</div>
+                        <div class="consumption-item">CURA CATARRO, ASMA Y BRONQUITIS</div>
+                        <div class="consumption-item">ELIMINA EL COLESTEROL Y TRIGLICÉRIDOS, AYUDANDO A REGULARIZAR LA SANGRE</div>
+                        <div class="consumption-item">AYUDA A LA DIGESTIÓN</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ingredientes" class="content-section vibrant-section">
+            <div class="container">
+                <h2 class="section-title">Ingredientes</h2>
+                <div class="card">
+                    <h2>Lo que Necesitamos</h2>
+                    <ul class="bullet-list">
+                        <li>3 LITROS DE AGUA</li>
+                        <li>1/2 LIMÓN</li>
+                        <li>3 CUCHARADAS DE MIEL</li>
+                        <li>50 G DE FLOR DE JAMAICA</li>
+                    </ul>
+                </div>
+                <div class="ingredientes-grid">
+                    <div class="ingrediente-item"><img src="img/jamaica.jpg" alt="Flor de Jamaica"><p>Jamaica</p></div>
+                    <div class="ingrediente-item"><img src="img/agua.jpg" alt="Agua"><p>Agua</p></div>
+                    <div class="ingrediente-item"><img src="img/miel.jpg" alt="Miel"><p>Miel</p></div>
+                    <div class="ingrediente-item"><img src="img/limon.jpg" alt="Limón"><p>Limón</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pasos" class="content-section vibrant-section">
+            <div class="container">
+                <h2 class="section-title">Procedimiento</h2>
+                <div class="timeline">
+                    <div class="paso-container left">
+                        <div class="paso-content">
+                            <h3>Paso 1</h3>
+                            <img src="img/llenaragua.png" alt="Poniendo agua en una olla verticalmente">
+                            <p>EN UNA OLLA, HERVIR TRES LITROS DE AGUA.</p>
+                        </div>
+                    </div>
+                    <div class="paso-container right">
+                        <div class="paso-content">
+                            <h3>Paso 2</h3>
+                            <img src="img/hervir5.jpeg" alt="Hervir la flor de Jamaica en la estufa">
+                            <p>ECHAR LA FLOR DE JAMAICA Y DEJAR HERVIR POR 5 MINUTOS.</p>
+                        </div>
+                    </div>
+                    <div class="paso-container left">
+                        <div class="paso-content">
+                            <h3>Paso 3</h3>
+                            <img src="img/niñossirviendopaso3.png" alt="Colando el agua de Jamaica en una jarra">
+                            <p>COLAR EN UNA JARRA EL AGUA DE JAMAICA.</p>
+                        </div>
+                    </div>
+                    <div class="paso-container right">
+                        <div class="paso-content">
+                            <h3>Paso 4</h3>
+                            <img src="img/echarmiel.png" alt="Añadiendo miel y limón a la bebida">
+                            <p>AÑADIR 1/2 LIMÓN Y TRES CUCHARADAS DE MIEL.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="respuesta" class="content-section vibrant-section">
+            <div class="container">
+                <h2 class="section-title">Respuesta Final</h2>
+                <div class="card">
+                    <h2>Resultados Obtenidos</h2>
+                    <p>SÍ, LA FLOR DE JAMAICA INFLUYE EN EL CONSUMO NATURAL PARA PREVENIR ALGUNAS ENFERMEDADES Y NO CONSUMIR LOS MEDICAMENTOS QUE CONTIENEN MUCHOS COMPONENTES QUÍMICOS QUE A LARGO PLAZO TRAEN CONSECUENCIAS DE DAÑAR ALGÚN OTRO ÓRGANO COMO EL ESTÓMAGO, HÍGADO, SISTEMA NERVIOSO; AYUDA A REGULARIZAR LA SANGRE.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="conclusion" class="content-section vibrant-section">
+            <div class="container">
+                <h2 class="section-title">Conclusión</h2>
+                <div class="card">
+                    <h2>¡Misión Cumplida!</h2>
+                    <ul class="bullet-list">
+                        <li>CONSUMIENDO CORRECTAMENTE LA FLOR DE JAMAICA SE OBTIENE UN BUEN RESULTADO EN BENEFICIO DE NUESTRA SALUD.</li>
+                        <li>CON ESTE PROYECTO TAMBIÉN SE PUEDE INICIAR UN EMPRENDIMIENTO PARA MEJORAR NUESTRA ECONOMÍA Y A LA VEZ AYUDANDO A LAS PERSONAS A MEJORAR SU SALUD.</li>
+                    </ul>
+                    <img src="img/conclucion.jpeg" alt="Conclusión" class="card-image">
+                </div>
+            </div>
+        </section>
+        
+        <section id="referencias" class="content-section vibrant-section">
+            <div class="container">
+                <h2 class="section-title">Referencias</h2>
+                <div class="card">
+                    <h2>Fuentes Bibliográficas</h2>
+                    <p style="font-size: 1rem; font-style: italic; color: var(--texto-oscuro);">(Por completar - Aquí van las referencias bibliográficas del proyecto)</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Proyecto Escolar. ¡Cuidando nuestra salud con la naturaleza!</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinksContainer = document.querySelector('.nav-links');
+            const allSections = document.querySelectorAll('.content-section');
+
+            function showSection(sectionId) {
+                allSections.forEach(section => section.classList.remove('active'));
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) targetSection.classList.add('active');
+
+                navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${sectionId}`));
+                if (navLinksContainer.classList.contains('active')) navLinksContainer.classList.remove('active');
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('href').substring(1);
+                    // Si se hace clic en 'inicio', ya no necesita redirección.
+                    showSection(sectionId);
+                });
+            });
+
+            menuToggle.addEventListener('click', () => navLinksContainer.classList.toggle('active'));
+            
+            // Inicia en la sección "inicio" por defecto.
+            showSection('inicio');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.card, .grid-image, .ingrediente-item, .paso-container, .consumption-box').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
